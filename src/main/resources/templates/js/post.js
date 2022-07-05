@@ -36,7 +36,40 @@ function display(data) {
         <td>${data[i].createAt}</td>
         <td>${data[i].title}</td>
         <td>${data[i].content}</td>
-        <td><img src="image/${data[i].image}"></td>
+        <td id="imgDiv"><img src="${data[i].image}" height="50px" width="50px"></td>
+    </tr>`
+    }
+    str += `</tbody>
+</table>`
+    document.getElementById("display").innerHTML = str
+}
+
+function displayAction(data) {
+    let str = `<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Author</th>
+        <th scope="col">Time</th>
+        <th scope="col">Title</th>
+        <th scope="col">Content</th>
+        <th scope="col">Image</th>
+        <th scope="col">Action</th>
+    </tr>
+    </thead>
+    <tbody>`
+    for (let i = 0; i < data.length; i++) {
+        str += `<tr>
+        <th scope="row">${i + 1}</th>
+        <td>${data[i].user.username}</td>
+        <td>${data[i].createAt}</td>
+        <td>${data[i].title}</td>
+        <td>${data[i].content}</td>
+        <td id="imgDiv"><img src="${data[i].image}" height="50px" width="50px"></td>
+        <td><div class="btn-group" role="group">
+  <button type="button" class="btn btn-primary btn-sm" onclick="showEditForm()">Edit</button>
+  <button type="button" class="btn btn-danger btn-sm" onclick="deletePost()">Delete</button>
+</div></td>
     </tr>`
     }
     str += `</tbody>
@@ -51,18 +84,17 @@ function showAddForm() {
 function addPost() {
     let title = document.getElementById("title").value
     let content = document.getElementById("content").value
-    let createAt = document.getElementById("createAt").value
+    let image = localStorage.getItem(key);
     let userId = id;
 
     let post = {
         title : title,
         content : content,
-        createAt : createAt,
+        image : image,
         user : {
             id : userId
         }
     }
-    console.log(post)
     $.ajax({
         headers: {
             'Accept': 'application/json',
@@ -80,6 +112,7 @@ function addPost() {
             setTimeout(function () {
                 $("#myModal").modal('hide');
             }, 1000);
+            localStorage.removeItem(key)
             findAllProduct()
         },
         error: function (error) {
@@ -116,7 +149,7 @@ function findByUserId() {
         url: "http://localhost:8000/users/find-by-userid/" + id,
         success: function (data) {
             console.log(data)
-            display(data)
+            displayAction(data)
         },
         error: function (error) {
             console.log(error)

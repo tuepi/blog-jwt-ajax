@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @RestController
@@ -42,6 +43,7 @@ public class UserController {
 
     @PostMapping("/post")
     public ResponseEntity<Post> saveProduct(@RequestBody Post product) {
+        product.setCreateAt(LocalDateTime.now());
         return new ResponseEntity<>(postService.save(product), HttpStatus.CREATED);
     }
 

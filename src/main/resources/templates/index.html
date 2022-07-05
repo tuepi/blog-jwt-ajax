@@ -12,6 +12,25 @@
     <link rel="stylesheet" href="css/css.css">
     <script src="js/post.js"></script>
     <script src="js/user-page.js"></script>
+    <script src="js/upload.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
+    <script>
+        //BE SURE TO PROTECT EVERYTHING IN THE CONFIG
+        //DON'T COMMIT IT!!!
+
+        // Initialize Firebase
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyDINLiwgRfHfTjMSZe4Wz_sDIPi2aNDsH0",
+            authDomain: "tueproject-b562f.firebaseapp.com",
+            projectId: "tueproject-b562f",
+            storageBucket: "tueproject-b562f.appspot.com",
+            messagingSenderId: "851867500112",
+            appId: "1:851867500112:web:b66f1795bba23872ccdb55",
+            measurementId: "G-QE4ZC2F13B"
+        };
+        firebase.initializeApp(firebaseConfig);
+    </script>
 </head>
 <body onload="showLoginForm()">
 <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -119,9 +138,8 @@
                         <label for="content">Content</label>
                         <input type="text" class="form-control" id="content">
 
-                        <label for="createAt">Time</label>
-                        <input type="datetime-local" class="form-control" id="createAt">
-
+                        <label for="fileButton">Image</label><br>
+                        <input type="file" value="upload" accept=".jpg;.gif" id="fileButton" onchange="upload(event)">
                         <input type="hidden" class="form-control" id="userId">
                     </div>
                 </div>
